@@ -9,6 +9,8 @@ Description:
 - renders a landing page with a search form ('/')
 - processes form submissions and forwards results to a results page ('/search/results')
 - connects to an Elasticsearch instance running on localhost:9200
+
+Reference: https://coderivers.org/blog/elasticsearch-in-python/
 """
 
 import os
@@ -44,15 +46,36 @@ def home():
     return render_template('search.html', documents=documents)
 
 # results page: handles form submissions and renders result template
-@app.route('/search/results', methods=['GET', 'POST'])
+@app.route('/search/results', methods=['POST'])
 def search_request():
+
     # extract search term from POST request
     search_term = request.form["input"]
 
-    # TODO: perform elasticsearch query
-    # res = es.search(...)
+    if "show_all" in request.form or search_term == "":
+        res = es_client.search(
+            index=INDEX_NAME,
+            body={
+                "query": {
+                    "match_all": {}
+                },
+                "size": 1000 # number of documents to return
+            }
+        )
+    else:
+        query = {
+            "query": {
+                "multi_match": {
+                    "query": search_term,
+                    "fields": ["name", "summary"]
+                }
+            },
+            "size": 1000 # number of documents to return
+        }
 
-    return render_template('results.html', res=res )
+        res = es_client.search(index=INDEX_NAME, body=query) 
+
+    return render_template('results.html', res=res['hits']['hits'])
 
 # application entry point
 if __name__ == '__main__':
