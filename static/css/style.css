@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f3f3;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    padding-top: 100px;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 75vh;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+form {
+    display: flex; /* arrange input and button horizontally */
+    gap: 8px; /* spacing between input and button */
+}
+
+input[type="text"] {
+    flex: 1; /* take up remaining space */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 12px;
+    background: #007bff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex; /* center SVG inside button */
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover {
+    background: #0056c7;
+}
