@@ -1,4 +1,45 @@
 <!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Big Bang Theory Episode Search</title>
+    <!-- link to external styles -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
 <body>
+    <div class="container">
+        <h1>Big Bang Theory Episode Search</h1>
+
+        <form action="/search/results" method="POST">
+            <input type="text" name="input" placeholder="Enter search term..." required>
+            <button type="submit">
+                <!-- Inline SVG magnifying glass -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    {% if documents %}
+                        {% for key in documents[0].keys() %}
+                            <th>{{ key }}</th>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in documents %}
+                    <tr>
+                        {% for value in doc.values() %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
